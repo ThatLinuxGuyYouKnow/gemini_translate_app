@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoApp(
       debugShowCheckedModeBanner: false,
-      title: 'Turbo Shark',
+      title: 'Gemini Translate',
       theme: const CupertinoThemeData(
         brightness: Brightness.dark, // Set the app to dark mode
         primaryColor: CupertinoColors.systemOrange,
