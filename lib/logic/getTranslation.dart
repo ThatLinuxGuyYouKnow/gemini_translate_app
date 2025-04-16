@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:gemini_translate/data/apikey.dart';
 import 'package:http/http.dart' as http;
 
 Future<Map<String, dynamic>> getTranslation({
@@ -7,7 +8,8 @@ Future<Map<String, dynamic>> getTranslation({
   required String targetText,
 }) async {
   try {
-    String apiKey = getApiKey();
+    Apikey apikey = Apikey();
+    String apiKey = apikey.get();
 
     final url =
         Uri.parse('https://gemini-translate-dzxg.onrender.com/translate');
