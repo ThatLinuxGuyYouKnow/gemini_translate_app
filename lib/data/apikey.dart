@@ -9,4 +9,8 @@ class Apikey {
   store({required String apiKey}) {
     box.write('apiKey', apiKey);
   }
+
+  void delete() {
+    box.remove('apiKey');
+  }
 }

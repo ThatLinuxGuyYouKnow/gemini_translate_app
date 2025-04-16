@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gemini_translate/setKeyScreen.dart';
 import 'package:get_storage/get_storage.dart';
 
 void main() async {
@@ -16,13 +17,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Gemini Translate',
       theme: const CupertinoThemeData(
-        brightness: Brightness.dark, // Set the app to dark mode
-        primaryColor: CupertinoColors.systemOrange,
-        scaffoldBackgroundColor:
-            Color.fromARGB(255, 30, 30, 30), // Dark background
+        brightness: Brightness.dark,
+        primaryColor: CupertinoColors.systemBlue,
+        scaffoldBackgroundColor: Color.fromARGB(255, 30, 30, 30),
         textTheme: CupertinoTextThemeData(
-          textStyle: TextStyle(
-              color: CupertinoColors.white), // Light text for contrast
+          textStyle: TextStyle(color: CupertinoColors.white),
         ),
       ),
       home: TranslationScreen(),
@@ -55,7 +54,15 @@ class _TranslationScreenState extends State<TranslationScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
+      navigationBar: CupertinoNavigationBar(
+        leading: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ApiKeyScreen()),
+              );
+            },
+            child: Icon(Icons.key)),
         middle: Text('Gemini Translate',
             style: TextStyle(fontWeight: FontWeight.bold)),
       ),
