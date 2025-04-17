@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gemini_translate/data/apikey.dart';
+import 'package:gemini_translate/logic/getTranslation.dart';
 import 'package:gemini_translate/setKeyScreen.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -50,7 +52,8 @@ class _TranslationScreenState extends State<TranslationScreen> {
   // Default selected languages
   String _inputLanguage = 'Auto Detect';
   String _outputLanguage = 'English';
-
+  Apikey _apiKey = Apikey();
+  TextEditingController textToTranslateRaw = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -146,6 +149,8 @@ class _TranslationScreenState extends State<TranslationScreen> {
 
               // Text Input Field
               CupertinoTextField(
+                onChanged: (value) => setState(() {}),
+                controller: textToTranslateRaw,
                 placeholder: 'Enter text to translate',
                 style:
                     const TextStyle(fontSize: 18, color: CupertinoColors.white),
@@ -160,11 +165,20 @@ class _TranslationScreenState extends State<TranslationScreen> {
               // Translate Button
               CupertinoButton.filled(
                 onPressed: () {
-                  // TODO: Implement translation logic
+                  textToTranslateRaw.text.length > 1
+                      ? getTranslation(
+                          originalLanguage: _inputLanguage,
+                          targetLanguage: _outputLanguage,
+                          targetText: textToTranslateRaw.text)
+                      : null;
                 },
-                child: const Text('Translate',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                child: Text('Translate',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: textToTranslateRaw.text.length > 1
+                            ? Colors.white
+                            : Colors.grey)),
               ),
               const SizedBox(height: 20),
 

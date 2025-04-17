@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'package:gemini_translate/data/apikey.dart';
 import 'package:http/http.dart' as http;
 
-Future<Map<String, dynamic>> getTranslation({
+Future<String> getTranslation({
   required String originalLanguage,
   required String targetLanguage,
   required String targetText,
 }) async {
   try {
+    print('trying to translate');
     Apikey apikey = Apikey();
     String apiKey = apikey.get();
 
@@ -28,8 +29,12 @@ Future<Map<String, dynamic>> getTranslation({
     );
 
     if (response.statusCode == 200) {
+      print('all good!');
+
+      print(response.body);
       final Map<String, dynamic> responseData = jsonDecode(response.body);
-      return responseData;
+      print(responseData['translated_text']);
+      return responseData['translated_text'];
     } else {
       throw Exception('Failed to translate text: ${response.body}');
     }
