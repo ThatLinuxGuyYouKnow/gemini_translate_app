@@ -53,6 +53,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
   String _inputLanguage = 'Auto Detect';
   String _outputLanguage = 'English';
   Apikey _apiKey = Apikey();
+  String translated_text = '';
   TextEditingController textToTranslateRaw = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -164,14 +165,17 @@ class _TranslationScreenState extends State<TranslationScreen> {
 
               // Translate Button
               CupertinoButton.filled(
-                onPressed: () {
-                  textToTranslateRaw.text.length > 1
-                      ? getTranslation(
-                          originalLanguage: _inputLanguage,
-                          targetLanguage: _outputLanguage,
-                          targetText: textToTranslateRaw.text)
-                      : null;
-                },
+                onPressed: textToTranslateRaw.text.length > 1
+                    ? () async {
+                        print('hey!');
+                        translated_text = await getTranslation(
+                            context: context,
+                            originalLanguage: _inputLanguage,
+                            targetLanguage: _outputLanguage,
+                            targetText: textToTranslateRaw.text);
+                        setState(() {});
+                      }
+                    : null,
                 child: Text('Translate',
                     style: TextStyle(
                         fontSize: 18,
@@ -185,14 +189,16 @@ class _TranslationScreenState extends State<TranslationScreen> {
               // Translated Text Output
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: CupertinoColors.black, // Dark container
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const SingleChildScrollView(
+                  child: SingleChildScrollView(
                     child: Text(
-                      'Translated text will appear here',
+                      translated_text.length > 1
+                          ? translated_text
+                          : 'Translated text will appear here',
                       style:
                           TextStyle(fontSize: 18, color: CupertinoColors.white),
                     ),

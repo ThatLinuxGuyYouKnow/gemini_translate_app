@@ -1,12 +1,13 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:gemini_translate/data/apikey.dart';
 import 'package:http/http.dart' as http;
 
-Future<String> getTranslation({
-  required String originalLanguage,
-  required String targetLanguage,
-  required String targetText,
-}) async {
+Future<String> getTranslation(
+    {required String originalLanguage,
+    required String targetLanguage,
+    required String targetText,
+    required context}) async {
   try {
     print('trying to translate');
     Apikey apikey = Apikey();
@@ -34,10 +35,15 @@ Future<String> getTranslation({
       print(response.body);
       final Map<String, dynamic> responseData = jsonDecode(response.body);
       print(responseData['translated_text']);
+
       return responseData['translated_text'];
     } else {
-      throw Exception('Failed to translate text: ${response.body}');
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(
+          content: Text('Failed to translate text: ${response.body}')));
     }
+    return '';
   } catch (e) {
     throw Exception('Error during translation: $e');
   }
