@@ -1,5 +1,11 @@
 # Gemini Translate
 
+[![Flutter](https://img.shields.io/badge/Flutter-3.0+-02569B?logo=flutter)](https://flutter.dev/)
+[![Dart](https://img.shields.io/badge/Dart-3.0+-0175C2?logo=dart)](https://dart.dev/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Gemini API](https://img.shields.io/badge/Powered%20by-Gemini%20API-4285F4?logo=google)](https://ai.google.dev/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 A Flutter application for translating text between languages using the Google Gemini API.
 
 ## Overview
@@ -63,5 +69,12 @@ flutter run
    - Enter the text you want to translate
    - Tap the "Translate" button
    - View the translated text in the result area
+
+## Project Structure
+
+- `lib/main.dart` - Main application and UI components
+- `lib/data/apikey.dart` - API key storage management
+- `lib/logic/getTranslation.dart` - Translation functionality
+- `lib/setKeyScreen.dart` - API key management screen
 
  
