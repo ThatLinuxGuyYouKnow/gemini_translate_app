@@ -52,7 +52,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
   // Default selected languages
   String _inputLanguage = 'Auto Detect';
   String _outputLanguage = 'English';
-  Apikey _apiKey = Apikey();
+
   String translated_text = '';
   TextEditingController textToTranslateRaw = TextEditingController();
   @override

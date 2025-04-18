@@ -3,55 +3,54 @@ import 'package:flutter/material.dart';
 import 'package:gemini_translate/data/apikey.dart';
 import 'package:http/http.dart' as http;
 
-Future<String> getTranslation(
-    {required String originalLanguage,
-    required String targetLanguage,
-    required String targetText,
-    required context}) async {
+Future<String> getTranslation({
+  required BuildContext context,
+  required String originalLanguage,
+  required String targetLanguage,
+  required String targetText,
+}) async {
+  final keyHandler = Apikey();
+  final apiKey = keyHandler.get();
+
+  if (apiKey.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'You need to set your API key! Tap the key icon on the top left.',
+        ),
+      ),
+    );
+    return '';
+  }
+
+  final url = Uri.parse('https://gemini-translate-dzxg.onrender.com/translate');
+  final body = jsonEncode({
+    "original_language": originalLanguage,
+    "target_language": targetLanguage,
+    "text": targetText,
+    "api_key": apiKey,
+  });
+
   try {
-    print('trying to translate');
-    Apikey keyHandler = Apikey();
-    String apiKey = keyHandler.get();
-    if (apiKey.length < 1) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(
-          content: Text(
-              'You need to set your api key, tap the key icon on the top left')));
-      return '';
-    }
-    final url =
-        Uri.parse('https://gemini-translate-dzxg.onrender.com/translate');
-
-    final Map<String, String> requestBody = {
-      "original_language": originalLanguage,
-      "target_language": targetLanguage,
-      "text": targetText,
-      "api_key": apiKey,
-    };
-
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(requestBody),
+      body: body,
     );
 
     if (response.statusCode == 200) {
-      print('all good!');
-
-      print(response.body);
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-      print(responseData['translated_text']);
-
-      return responseData['translated_text'];
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      return data['translated_text'] as String? ?? '';
     } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(
-          content: Text('Failed to translate text: ${response.body}')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Translate failed: ${response.body}')),
+      );
+      return '';
     }
-    return '';
   } catch (e) {
-    throw Exception('Error during translation: $e');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error during translation: $e')),
+    );
+    return '';
   }
 }
