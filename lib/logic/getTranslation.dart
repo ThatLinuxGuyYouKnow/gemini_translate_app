@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gemini_translate/data/apikey.dart';
 import 'package:http/http.dart' as http;
@@ -10,14 +11,21 @@ Future<String> getTranslation({
   required String targetText,
 }) async {
   final keyHandler = Apikey();
-  final apiKey = keyHandler.get();
+  final String apiKey = keyHandler.get();
 
-  if (apiKey.isEmpty) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'You need to set your API key! Tap the key icon on the top left.',
-        ),
+  if (apiKey.length < 2) {
+    await showCupertinoDialog(
+      context: context,
+      builder: (_) => CupertinoAlertDialog(
+        title: const Text('Missing API Key'),
+        content:
+            const Text('Tap the key icon on the top left to set your key.'),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text('OK'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
       ),
     );
     return '';
@@ -42,8 +50,18 @@ Future<String> getTranslation({
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       return data['translated_text'] as String? ?? '';
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Translate failed: ${response.body}')),
+      await showCupertinoDialog(
+        context: context,
+        builder: (_) => CupertinoAlertDialog(
+          title: const Text('Something went wrong'),
+          content: Text(response.body),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text('OK'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        ),
       );
       return '';
     }
