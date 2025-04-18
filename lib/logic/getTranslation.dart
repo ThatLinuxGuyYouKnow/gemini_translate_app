@@ -12,12 +12,13 @@ Future<String> getTranslation(
     print('trying to translate');
     Apikey keyHandler = Apikey();
     String apiKey = keyHandler.get();
-    if (apiKey.length > 1) {
+    if (apiKey.length < 1) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(
           content: Text(
               'You need to set your api key, tap the key icon on the top left')));
+      return '';
     }
     final url =
         Uri.parse('https://gemini-translate-dzxg.onrender.com/translate');
