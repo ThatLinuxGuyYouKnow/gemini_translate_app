@@ -60,6 +60,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        padding: EdgeInsetsDirectional.only(start: 16, end: 16),
         trailing: GestureDetector(
           child: Icon(Icons.code),
           onTap: () async {
