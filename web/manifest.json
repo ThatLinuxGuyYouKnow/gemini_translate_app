@@ -1,11 +1,11 @@
 {
-    "name": "gemini_translate",
-    "short_name": "gemini_translate",
+    "name": "Gemini Translate",
+    "short_name": "Gemini Translate",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Translate text wiht the Gemini API",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
