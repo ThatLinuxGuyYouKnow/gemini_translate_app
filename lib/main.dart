@@ -60,9 +60,9 @@ class _TranslationScreenState extends State<TranslationScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        padding: EdgeInsetsDirectional.only(start: 20, end: 20),
+        padding: EdgeInsetsDirectional.only(start: 31, end: 31),
         trailing: GestureDetector(
-          child: Icon(Icons.code, size: 12),
+          child: Icon(Icons.code, size: 19),
           onTap: () async {
             final Uri url = Uri.parse(
                 'https://github.com/ThatLinuxGuyYouKnow/gemini_translate_app');
@@ -76,7 +76,10 @@ class _TranslationScreenState extends State<TranslationScreen> {
                 MaterialPageRoute(builder: (context) => const ApiKeyScreen()),
               );
             },
-            child: Icon(Icons.key)),
+            child: Icon(
+              Icons.key_outlined,
+              size: 19,
+            )),
         middle: Text('Gemini Translate',
             style: TextStyle(fontWeight: FontWeight.bold)),
       ),
@@ -88,6 +91,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
             children: [
               // Input Language Selector
               CupertinoButton(
+                padding: EdgeInsets.zero,
                 onPressed: () {
                   showCupertinoModalPopup(
                     context: context,
@@ -111,19 +115,35 @@ class _TranslationScreenState extends State<TranslationScreen> {
                     ),
                   );
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Input Language: $_inputLanguage',
-                        style: const TextStyle(fontSize: 16)),
-                    const Icon(CupertinoIcons.chevron_down),
-                  ],
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(24, 122, 121, 121),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Input Language: $_inputLanguage',
+                          style: const TextStyle(
+                              fontSize: 16, color: CupertinoColors.systemBlue),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const Icon(CupertinoIcons.chevron_down,
+                          color: CupertinoColors.systemBlue),
+                    ],
+                  ),
                 ),
               ),
+
               const SizedBox(height: 20),
 
               // Output Language Selector
               CupertinoButton(
+                padding: EdgeInsets.zero,
                 onPressed: () {
                   showCupertinoModalPopup(
                     context: context,
@@ -147,15 +167,34 @@ class _TranslationScreenState extends State<TranslationScreen> {
                     ),
                   );
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Output Language: $_outputLanguage',
-                        style: const TextStyle(fontSize: 16)),
-                    const Icon(CupertinoIcons.chevron_down),
-                  ],
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(24, 122, 121, 121),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Output Language: $_outputLanguage',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: CupertinoColors.systemBlue,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const Icon(
+                        CupertinoIcons.chevron_down,
+                        color: CupertinoColors.systemBlue,
+                      ),
+                    ],
+                  ),
                 ),
               ),
+
               const SizedBox(height: 20),
 
               // Text Input Field
