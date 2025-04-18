@@ -4,6 +4,7 @@ import 'package:gemini_translate/data/apikey.dart';
 import 'package:gemini_translate/logic/getTranslation.dart';
 import 'package:gemini_translate/setKeyScreen.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() async {
   await GetStorage.init();
@@ -59,6 +60,14 @@ class _TranslationScreenState extends State<TranslationScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        trailing: GestureDetector(
+          child: Icon(Icons.code),
+          onTap: () async {
+            final Uri url = Uri.parse(
+                'https://github.com/ThatLinuxGuyYouKnow/gemini_translate_app');
+            if (!await launchUrl(url)) {}
+          },
+        ),
         leading: GestureDetector(
             onTap: () {
               Navigator.push(
