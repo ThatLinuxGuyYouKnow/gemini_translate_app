@@ -60,9 +60,9 @@ class _TranslationScreenState extends State<TranslationScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        padding: EdgeInsetsDirectional.only(start: 16, end: 16),
+        padding: EdgeInsetsDirectional.only(start: 20, end: 20),
         trailing: GestureDetector(
-          child: Icon(Icons.code),
+          child: Icon(Icons.code, size: 12),
           onTap: () async {
             final Uri url = Uri.parse(
                 'https://github.com/ThatLinuxGuyYouKnow/gemini_translate_app');
