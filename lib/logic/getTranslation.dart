@@ -10,9 +10,15 @@ Future<String> getTranslation(
     required context}) async {
   try {
     print('trying to translate');
-    Apikey apikey = Apikey();
-    String apiKey = apikey.get();
-
+    Apikey keyHandler = Apikey();
+    String apiKey = keyHandler.get();
+    if (apiKey.length > 1) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(
+          content: Text(
+              'You need to set your api key, tap the key icon on the top left')));
+    }
     final url =
         Uri.parse('https://gemini-translate-dzxg.onrender.com/translate');
 
